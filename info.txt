@@ -1,0 +1,14 @@
+{
+ "Name": "ToddsMod",
+ "ID": "ToddsMod",
+ "Author": "Todd",
+ "Description": "Todd's experiment",
+ "ModVersion": 0.1,
+ "GameVersion": 2.052,
+ "Date": "16/11/2023",
+ "Dependencies": [
+  "CCSE"
+ ],
+ "Disabled": 1,
+ "AllowSteamAchievs": 1
+}
