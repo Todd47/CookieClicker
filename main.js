@@ -12,7 +12,8 @@ if (typeof CCSE == 'undefined') Game.LoadMod('https://klattmose.github.io/Cookie
 
 ToddsMod.launch = function () {
     this.register()
-    Game.Notify(`Cooler mod loaded!`,[16,5]);
+    Game.Notify(`==========Todd's mod loaded!==========`,[16,5]);
+    console.log("Todd's mod loaded!!!!")
 
     /**
 
