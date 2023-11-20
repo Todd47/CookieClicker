@@ -1,0 +1,56 @@
+[
+  {
+    "id": 0,
+    "name": "Reinforced index finger",
+    "dname": "Reinforced index finger",
+    "desc": "The mouse and cursors are <b>twice</b> as efficient.<q>prod prod</q>",
+    "baseDesc": "The mouse and cursors are <b>twice</b> as efficient.<q>prod prod</q>",
+    "basePrice": 100,
+    "priceLumps": 0,
+    "icon": [
+      0,
+      0
+    ],
+    "iconFunction": 0,
+    "unlocked": 1,
+    "bought": 0,
+    "order": 100,
+    "pool": "",
+    "power": 0,
+    "vanilla": 1,
+    "unlockAt": 0,
+    "techUnlock": [],
+    "parents": [],
+    "type": "upgrade",
+    "tier": 1,
+    "buildingTie": 0,
+    "ddesc": "The mouse and cursors are <b>twice</b> as efficient.<q>prod prod</q>"
+  },
+  {
+    "id": 1,
+    "name": "Carpal tunnel prevention cream",
+    "dname": "Carpal tunnel prevention cream",
+    "desc": "The mouse and cursors are <b>twice</b> as efficient.<q>it... it hurts to click...</q>",
+    "baseDesc": "The mouse and cursors are <b>twice</b> as efficient.<q>it... it hurts to click...</q>",
+    "basePrice": 500,
+    "priceLumps": 0,
+    "icon": [
+      0,
+      1
+    ],
+    "iconFunction": 0,
+    "unlocked": 1,
+    "bought": 0,
+    "order": 100.001,
+    "pool": "",
+    "power": 0,
+    "vanilla": 1,
+    "unlockAt": 0,
+    "techUnlock": [],
+    "parents": [],
+    "type": "upgrade",
+    "tier": 2,
+    "buildingTie": 0,
+    "ddesc": "The mouse and cursors are <b>twice</b> as efficient.<q>it... it hurts to click...</q>"
+  }
+]

@@ -9,6 +9,8 @@ if (!FortuneHelper) var FortuneHelper = {
         reindeer: 0,
         wrinkler: 0,
         research: 0,
+        toddsresearch: 0,
+        toddsbuild: 0,
         pledge: 0,
         click: 10,
         clickalways: 0,
@@ -26,6 +28,7 @@ if (!FortuneHelper) var FortuneHelper = {
     init: function() {
         Game.customOptionsMenu.push(this.addOptionsMenu);
         setInterval(this.logicLoop, 200);
+        setInterval(this.toddsLoop, 1000);
         this.updateAutoclicker();
         CCSE.SpliceCodeIntoFunction('Game.playCookieClickSound', 2, 'if (FortuneHelper.config.muteclick) return;');
         CCSE.SpliceCodeIntoFunction('Game.Ascend', 5, 'FortuneHelper.preAscend();');
@@ -102,6 +105,50 @@ if (!FortuneHelper) var FortuneHelper = {
             Game.upgradesToRebuild=1;
         }
     },
+
+    toddsLoop: function () {
+        if (this.config.toddsresearch) {
+            for (const upgrade of Game.UpgradesInStore) {
+                if (this.config.toddsresearch && upgrade.pool !== 'tech' && upgrade.pool !== 'toggle') {
+                    upgrade.buy(1);
+                }
+            }
+        }
+
+        if (this.config.toddsbuild) {
+            const buildingNameList = ['You', 'Cortex baker', 'Idleverse', 'Javascript console', 'Fractal engine', 'Chancemaker', 'Prism', 'Antimatter condenser', 'Time machine', 'Portal', 'Alchemy lab', 'Shipment', 'Wizard tower', 'Temple', 'Bank', 'Factory', 'Mine', 'Farm', 'Grandma', 'Cursor'];
+
+            function execBuy(build, count) {
+                if (Game.cookies > build.getSumPrice(count)) {
+                    build.buy(count)
+                    console.log('building: ', build.name, ' buy: ', count)
+                } else {
+                    console.log('building: ', build.name, ' not affordable')
+                }
+            }
+
+            for (const buildingName of buildingNameList) {
+                const build = Game.Objects[buildingName]
+
+                const curAmount = build.amount
+                console.log('building: ', buildingName, ' with amount: ', curAmount)
+
+                if (curAmount < 10) {
+                    execBuy(build, 1);
+                } else if (curAmount < 30) {
+                    execBuy(build, 5);
+                } else if (curAmount < 250) {
+                    execBuy(build, 10);
+                }
+            }
+        }
+
+        // Game.Objects['Grandma']
+
+    },
+
+
+
 
     updateAutoclicker: function() {
         const value = this.config.click;
@@ -192,6 +239,9 @@ if (!FortuneHelper) var FortuneHelper = {
         </div><div class="listing">
             ${this.button('reindeer', 'Click Reindeer ON', 'Click Reindeer OFF')}
             ${this.button('wrinkler', 'Pop Wrinklers ON', 'Pop Wrinklers OFF')}
+        </div><div class="listing">
+            ${this.button('toddsresearch', 'Todds-Research ON', 'Todds-Research OFF')}
+            ${this.button('toddsbuild', 'Todds-Build ON', 'Todds-Build OFF')}
         </div>
         <br>
         ${this.header('Advanced')}
