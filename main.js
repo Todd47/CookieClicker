@@ -123,9 +123,9 @@ if (!FortuneHelper) var FortuneHelper = {
             function execBuy(build, count) {
                 if (Game.cookies > build.getSumPrice(count)) {
                     build.buy(count)
-                    console.log('building: ', build.name, ' buy: ', count)
+                    // console.log('building: ', build.name, ' buy: ', count)
                 } else {
-                    console.log('building: ', build.name, ' not affordable')
+                    // console.log('building: ', build.name, ' not affordable')
                 }
             }
 
@@ -155,6 +155,7 @@ if (!FortuneHelper) var FortuneHelper = {
         // reset counter
         if (this.toddsLoopCounter === 19999) {
             this.toddsLoopCounter = 0;
+            // Game.Notify("Here is Todd!",'',[29,27]);
         }
     },
 
