@@ -24,11 +24,13 @@ if (!FortuneHelper) var FortuneHelper = {
     playedfortune: false,
     playedgolden: false,
     clickInterval: null,
+    toddsLoopCounter: 0,
 
     init: function() {
         Game.customOptionsMenu.push(this.addOptionsMenu);
         setInterval(this.logicLoop, 200);
-        setInterval(this.toddsLoop, 1000);
+
+        setInterval(this.toddsLoop, 5000);
         this.updateAutoclicker();
         CCSE.SpliceCodeIntoFunction('Game.playCookieClickSound', 2, 'if (FortuneHelper.config.muteclick) return;');
         CCSE.SpliceCodeIntoFunction('Game.Ascend', 5, 'FortuneHelper.preAscend();');
@@ -131,20 +133,29 @@ if (!FortuneHelper) var FortuneHelper = {
                 const build = Game.Objects[buildingName]
 
                 const curAmount = build.amount
-                console.log('building: ', buildingName, ' with amount: ', curAmount)
+                // console.log('building: ', buildingName, ' with amount: ', curAmount)
 
-                if (curAmount < 10) {
-                    execBuy(build, 1);
-                } else if (curAmount < 30) {
-                    execBuy(build, 5);
-                } else if (curAmount < 250) {
-                    execBuy(build, 10);
+                if (this.toddsLoopCounter % 5 === 0) {
+                    if (curAmount < 10) {
+                        execBuy(build, 1);
+                    } else if (curAmount < 30) {
+                        execBuy(build, 5);
+                    } else if (curAmount < 250) {
+                        execBuy(build, 10);
+                    }
+                } else {
+                    if (curAmount < 5) {
+                        execBuy(build, 1);
+                    }
                 }
             }
         }
-
         // Game.Objects['Grandma']
-
+        this.toddsLoopCounter++;
+        // reset counter
+        if (this.toddsLoopCounter === 19999) {
+            this.toddsLoopCounter = 0;
+        }
     },
 
 
@@ -239,7 +250,9 @@ if (!FortuneHelper) var FortuneHelper = {
         </div><div class="listing">
             ${this.button('reindeer', 'Click Reindeer ON', 'Click Reindeer OFF')}
             ${this.button('wrinkler', 'Pop Wrinklers ON', 'Pop Wrinklers OFF')}
-        </div><div class="listing">
+        </div>
+        ${this.header("Todd's Automation")}
+        <div class="listing">
             ${this.button('toddsresearch', 'Todds-Research ON', 'Todds-Research OFF')}
             ${this.button('toddsbuild', 'Todds-Build ON', 'Todds-Build OFF')}
         </div>
