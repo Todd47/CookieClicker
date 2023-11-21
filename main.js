@@ -135,26 +135,18 @@ if (!FortuneHelper) var FortuneHelper = {
 
                 const curAmount = build.amount
 
-                if (curAmount < 250) {
-                    const m50 = 50 - curAmount
-                    const m100 = 100 - curAmount
-                    if (affordableCheck(build, m100)) {
-                        execBuy(build, m100)
-                    } else if (affordableCheck(build, m50)) {
-                        execBuy(build, m50);
-                    } else {
-                        if (affordableCheck(build, 10)) {
-                            execBuy(build, 10)
-                        } else if (affordableCheck(build, 5)) {
-                            execBuy(build, 5)
-                        } else {
-                            execBuy(build, 1)
+                const buildStepList = [400, 350, 300, 250, 200, 150, 100, 50, 25, 10, 5, 1]
+
+                if (curAmount < 400) {
+                    for (const stepLevel of buildStepList) {
+                        const diff = stepLevel - curAmount
+                        if (affordableCheck(build, diff)) {
+                            execBuy(build, diff)
+                            break
                         }
                     }
                 } else {
-                    if ((Game.cookies * 0.75) > build.getSumPrice(10)) {
-                        execBuy(build, 10)
-                    }
+                    execBuy(build, 10)
                 }
             }
         }
