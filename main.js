@@ -145,7 +145,7 @@ if (!FortuneHelper) var FortuneHelper = {
                             break
                         }
                     }
-                } else {
+                } else if ((Game.cookies * 0.75) > build.getSumPrice(10)) {
                     execBuy(build, 10)
                 }
             }
