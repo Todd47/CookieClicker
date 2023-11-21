@@ -135,9 +135,9 @@ if (!FortuneHelper) var FortuneHelper = {
 
                 const curAmount = build.amount
 
-                const buildStepList = [400, 350, 300, 250, 200, 150, 100, 50, 25, 10, 5, 1]
+                const buildStepList = [600, 550, 500, 450, 400, 350, 300, 250, 200, 150, 100, 50, 25, 10, 5, 1]
 
-                if (curAmount < 400) {
+                if (curAmount < 600) {
                     for (const stepLevel of buildStepList) {
                         const diff = stepLevel - curAmount
                         if (affordableCheck(build, diff)) {
@@ -145,7 +145,8 @@ if (!FortuneHelper) var FortuneHelper = {
                             break
                         }
                     }
-                } else if ((Game.cookies * 0.75) > build.getSumPrice(10)) {
+                }
+                if ((Game.cookies * 0.75) > build.getSumPrice(10)) {
                     execBuy(build, 10)
                 }
             }
