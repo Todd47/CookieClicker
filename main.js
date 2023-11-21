@@ -26,7 +26,7 @@ if (!FortuneHelper) var FortuneHelper = {
     clickInterval: null,
     toddsLoopCounter: 0,
 
-    init: function() {
+    init: function () {
         Game.customOptionsMenu.push(this.addOptionsMenu);
         setInterval(this.logicLoop, 200);
 
@@ -37,21 +37,21 @@ if (!FortuneHelper) var FortuneHelper = {
         this.isLoaded = true;
     },
 
-    load: function(str) {
+    load: function (str) {
         const config = JSON.parse(str);
-        for(const c in config) this.config[c] = config[c];
+        for (const c in config) this.config[c] = config[c];
         this.updateAutoclicker();
     },
 
-    save: function() {
+    save: function () {
         return JSON.stringify(this.config);
     },
 
-    register: function() {
+    register: function () {
         Game.registerMod(this.name, this);
     },
 
-    logicLoop: function() {
+    logicLoop: function () {
         // Fortune tickers
         if (Game.TickerEffect && Game.TickerEffect.type === 'fortune') {
             if (this.config.fortune && (this.config.fortuneall || Game.TickerEffect.sub !== 'fortuneGC' && Game.TickerEffect.sub !== 'fortuneCPS')) {
@@ -102,9 +102,9 @@ if (!FortuneHelper) var FortuneHelper = {
         }
 
         // Chocolate egg
-        if (this.config.chocolateegg && Game.Has('Inspired checklist') && !Game.Upgrades['Chocolate egg'].isVaulted()){
+        if (this.config.chocolateegg && Game.Has('Inspired checklist') && !Game.Upgrades['Chocolate egg'].isVaulted()) {
             Game.Upgrades['Chocolate egg'].vault();
-            Game.upgradesToRebuild=1;
+            Game.upgradesToRebuild = 1;
         }
     },
 
@@ -123,29 +123,37 @@ if (!FortuneHelper) var FortuneHelper = {
             function execBuy(build, count) {
                 if (Game.cookies > build.getSumPrice(count)) {
                     build.buy(count)
-                    // console.log('building: ', build.name, ' buy: ', count)
-                } else {
-                    // console.log('building: ', build.name, ' not affordable')
                 }
+            }
+
+            function affordableCheck(build, count) {
+                return (Game.cookies > build.getSumPrice(count))
             }
 
             for (const buildingName of buildingNameList) {
                 const build = Game.Objects[buildingName]
 
                 const curAmount = build.amount
-                // console.log('building: ', buildingName, ' with amount: ', curAmount)
 
-                if (this.toddsLoopCounter % 10 === 0) {
-                    if (curAmount < 10) {
-                        execBuy(build, 1);
-                    } else if (curAmount < 30) {
-                        execBuy(build, 5);
-                    } else if (curAmount < 250) {
-                        execBuy(build, 10);
+                if (curAmount < 250) {
+                    const m50 = 50 - curAmount
+                    const m100 = 100 - curAmount
+                    if (affordableCheck(build, m100)) {
+                        execBuy(build, m100)
+                    } else if (affordableCheck(build, m50)) {
+                        execBuy(build, m50);
+                    } else {
+                        if (affordableCheck(build, 10)) {
+                            execBuy(build, 10)
+                        } else if (affordableCheck(build, 5)) {
+                            execBuy(build, 5)
+                        } else {
+                            execBuy(build, 1)
+                        }
                     }
                 } else {
-                    if (curAmount < 5) {
-                        execBuy(build, 1);
+                    if ((Game.cookies * 0.75) > build.getSumPrice(10)) {
+                        execBuy(build, 10)
                     }
                 }
             }
@@ -160,15 +168,13 @@ if (!FortuneHelper) var FortuneHelper = {
     },
 
 
-
-
-    updateAutoclicker: function() {
+    updateAutoclicker: function () {
         const value = this.config.click;
         if (this.clickInterval != null) {
             clearInterval(this.clickInterval);
         }
         if (value > 0) {
-            this.clickInterval = setInterval(function() {
+            this.clickInterval = setInterval(function () {
                 if (FortuneHelper.config.clickalways) {
                     Game.ClickCookie(0);
                 } else {
@@ -176,19 +182,19 @@ if (!FortuneHelper) var FortuneHelper = {
                     for (const i in Game.buffs) { // Can't use "of" because it's not an array
                         const buff = Game.buffs[i];
                         if (buff.multCpS > 1) totalMultCPS *= buff.multCpS;
-                        if (totalMultCPS > 50 || buff.multClick > 1 || buff.name == 'Cursed finger'){
+                        if (totalMultCPS > 50 || buff.multClick > 1 || buff.name == 'Cursed finger') {
                             Game.ClickCookie(0);
                             break;
                         }
                     }
                 }
-            }, 1000/value);
+            }, 1000 / value);
         } else {
             this.clickInterval = null;
         }
     },
 
-    preAscend: function() {
+    preAscend: function () {
         const egg = Game.Upgrades['Chocolate egg'];
         if (this.config.chocolateegg && egg.unlocked && !egg.bought) {
             // Switch aura
@@ -216,11 +222,9 @@ if (!FortuneHelper) var FortuneHelper = {
     },
 
 
-
-
     /* Menu */
 
-    addOptionsMenu: function() {
+    addOptionsMenu: function () {
         const body = `
         ${this.header('Sounds')}
         <div class="listing">
@@ -267,11 +271,11 @@ if (!FortuneHelper) var FortuneHelper = {
         CCSE.AppendCollapsibleOptionsMenu(this.name, body)
     },
 
-    header: function(title) {
+    header: function (title) {
         return `<div class="listing" style="padding: 5px 16px; opacity: 0.7; font-size: 17px; font-family: Kavoon, Georgia, serif;">${title}</div>`
     },
 
-    slider: function(config, text, min, max) {
+    slider: function (config, text, min, max) {
         const name = `FortuneHelper${config}slider`;
         const value = this.config[config];
         const callback = `FortuneHelper.sliderCallback('${config}', '${name}');`
@@ -284,15 +288,15 @@ if (!FortuneHelper) var FortuneHelper = {
         </div>`;
     },
 
-    sliderCallback: function(config, slider) {
+    sliderCallback: function (config, slider) {
         const value = Math.round(l(slider).value);
-        l(slider+'Value').innerHTML = value;
+        l(slider + 'Value').innerHTML = value;
         this.config[config] = value;
 
         if (config === 'click') this.updateAutoclicker();
     },
 
-    button: function(config, texton, textoff, size) {
+    button: function (config, texton, textoff, size) {
         const name = `FortuneHelper${config}button`;
         const callback = `FortuneHelper.buttonCallback('${config}', '${name}', '${texton}', '${textoff}');`
         const value = this.config[config];
@@ -300,7 +304,7 @@ if (!FortuneHelper) var FortuneHelper = {
             ${Game.clickStr}="${callback}">${value ? texton : textoff}</a>`
     },
 
-    buttonCallback: function(config, button, texton, textoff) {
+    buttonCallback: function (config, button, texton, textoff) {
         const value = !this.config[config];
         this.config[config] = value;
         l(button).innerHTML = value ? texton : textoff
@@ -310,18 +314,17 @@ if (!FortuneHelper) var FortuneHelper = {
 };
 
 // Bind methods
-for (func of Object.getOwnPropertyNames(FortuneHelper).filter(m => typeof FortuneHelper[m] === 'function')){
+for (func of Object.getOwnPropertyNames(FortuneHelper).filter(m => typeof FortuneHelper[m] === 'function')) {
     FortuneHelper[func] = FortuneHelper[func].bind(FortuneHelper);
 }
 
 // Load mod
-if(!FortuneHelper.isLoaded){
-    if(CCSE && CCSE.isLoaded){
+if (!FortuneHelper.isLoaded) {
+    if (CCSE && CCSE.isLoaded) {
         FortuneHelper.register();
-    }
-    else{
-        if(!CCSE) var CCSE = {};
-        if(!CCSE.postLoadHooks) CCSE.postLoadHooks = [];
+    } else {
+        if (!CCSE) var CCSE = {};
+        if (!CCSE.postLoadHooks) CCSE.postLoadHooks = [];
         CCSE.postLoadHooks.push(FortuneHelper.register);
     }
 }
