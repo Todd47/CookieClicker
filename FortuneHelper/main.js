@@ -11,6 +11,7 @@ if (!FortuneHelper) var FortuneHelper = {
         research: 0,
         toddsresearch: 0,
         toddsbuild: 0,
+        toddsspell: 0,
         pledge: 0,
         click: 10,
         clickalways: 0,
@@ -151,6 +152,16 @@ if (!FortuneHelper) var FortuneHelper = {
                 }
             }
         }
+
+        if (this.config.toddsspell && this.toddsLoopCounter % 10 === 0){
+            const mana = 100,
+                spell = "hand of fate",
+                grimoire = Game.Objects["Wizard tower"].minigame;
+
+            if (grimoire.magic >= mana)
+                grimoire.castSpell(grimoire.spells[spell]);
+        }
+
         // Game.Objects['Grandma']
         this.toddsLoopCounter++;
         // reset counter
@@ -253,6 +264,9 @@ if (!FortuneHelper) var FortuneHelper = {
         <div class="listing">
             ${this.button('toddsresearch', 'Todds-Research ON', 'Todds-Research OFF')}
             ${this.button('toddsbuild', 'Todds-Build ON', 'Todds-Build OFF')}
+        </div>
+        <div class="listing">
+            ${this.button('toddsspell', 'Todds-Spell ON', 'Todds-Spell OFF')}
         </div>
         <br>
         ${this.header('Advanced')}
