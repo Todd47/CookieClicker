@@ -267,7 +267,7 @@ if (!FortuneHelper) var FortuneHelper = {
         </div>
         <div class="listing">
             ${this.button('toddsspell', 'Todds-Spell ON', 'Todds-Spell OFF')}
-            <input id="lumpClicker" type="button" value="click me gain lump" onclick="Game.gainLumps(1);" />
+            <input id="lumpClicker" class="option" type="button" value="click me gain lump" onclick="Game.gainLumps(1);" />
         </div>
         <br>
         ${this.header('Advanced')}
