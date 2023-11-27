@@ -171,7 +171,6 @@ if (!FortuneHelper) var FortuneHelper = {
         }
     },
 
-
     updateAutoclicker: function () {
         const value = this.config.click;
         if (this.clickInterval != null) {
@@ -225,6 +224,10 @@ if (!FortuneHelper) var FortuneHelper = {
         }
     },
 
+    gainLump: function () {
+        Game.gainLumps(1)
+    },
+
 
     /* Menu */
 
@@ -267,6 +270,7 @@ if (!FortuneHelper) var FortuneHelper = {
         </div>
         <div class="listing">
             ${this.button('toddsspell', 'Todds-Spell ON', 'Todds-Spell OFF')}
+            <input id="lumpClicker" type="button" value="clickMeToGainLump" onclick="gainLump();" />
         </div>
         <br>
         ${this.header('Advanced')}
