@@ -154,7 +154,7 @@ if (!FortuneHelper) var FortuneHelper = {
             }
         }
 
-        if (this.config.toddsspell && this.toddsLoopCounter % 10 === 0){
+        if (this.config.toddsspell && this.toddsLoopCounter % 10 === 0) {
             const mana = 100,
                 spell = "hand of fate",
                 grimoire = Game.Objects["Wizard tower"].minigame;
@@ -165,6 +165,7 @@ if (!FortuneHelper) var FortuneHelper = {
 
         if (this.config.toddsplant) {
             const unwantedCrop = [1, 2, 3, 14]
+            const garden = Game.ObjectsById[2].minigame
             for (let x = 0; x < 6; x++) {
                 for (let y = 0; y < 6; y++) {
 
@@ -281,7 +282,6 @@ if (!FortuneHelper) var FortuneHelper = {
             egg.buy(1);
         }
     },
-
 
 
     /* Menu */
