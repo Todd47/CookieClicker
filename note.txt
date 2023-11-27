@@ -1,2 +1,5 @@
 https://todd47.github.io/CookieClicker/main.js
 https://todd47.github.io/CookieClicker/FortuneHelper/main.js
+
+
+F:\SteamLibrary\steamapps\common\Cookie Clicker\resources\app\mods\workshop\FortuneHelper
