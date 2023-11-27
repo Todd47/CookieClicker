@@ -224,9 +224,6 @@ if (!FortuneHelper) var FortuneHelper = {
         }
     },
 
-    gainLump: function () {
-        Game.gainLumps(1)
-    },
 
 
     /* Menu */
@@ -270,7 +267,7 @@ if (!FortuneHelper) var FortuneHelper = {
         </div>
         <div class="listing">
             ${this.button('toddsspell', 'Todds-Spell ON', 'Todds-Spell OFF')}
-            <input id="lumpClicker" type="button" value="clickMeToGainLump" onclick="this.gainLump();" />
+            <input id="lumpClicker" type="button" value="click me gain lump" onclick="Game.gainLumps(1);" />
         </div>
         <br>
         ${this.header('Advanced')}
