@@ -13,6 +13,7 @@ if (!FortuneHelper) var FortuneHelper = {
         toddsbuild: 0,
         toddsspell: 0,
         toddsplant: 0,
+        toddsfertilizer: 0,
         pledge: 0,
         click: 10,
         clickalways: 0,
@@ -162,10 +163,10 @@ if (!FortuneHelper) var FortuneHelper = {
             if (grimoire.magic >= mana)
                 grimoire.castSpell(grimoire.spells[spell]);
         }
+        const garden = Game.ObjectsById[2].minigame
 
         if (this.config.toddsplant) {
             const unwantedCrop = [1, 2, 3, 14]
-            const garden = Game.ObjectsById[2].minigame
             for (let x = 0; x < 6; x++) {
                 for (let y = 0; y < 6; y++) {
 
@@ -182,43 +183,42 @@ if (!FortuneHelper) var FortuneHelper = {
 
                             if (unwantedCrop.includes(plotCrop)) {
                                 // 挖掉
-                                console.log(plotTile, x, y, '不对劲，挖掉')
                                 garden.clickTile(x, y)
                                 // 种下
                                 garden.clickTile(x, y)
                             } else {
                                 const plotCropPercentage = plotTile[1]
                                 if (plotCropPercentage >= 75) {
-                                    console.log(plotTile, x, y, '不对劲，要的，熟了，挖')
                                     garden.clickTile(x, y)
                                 } else if (plotCrop !== 0) {
-                                    console.log(plotTile, x, y, '不对劲，要的，没熟，不挖')
                                 }
                             }
                         } else if (plotCrop === 0) { // 自然死亡或者是别的情况挖掉的话
                             // 种下
-                            console.log(plotTile, x, y, '毛得了，种回去')
                             garden.clickTile(x, y)
                         }
 
                     } else {
                         const plotTile = garden.getTile(x, y)
                         const plotCrop = plotTile[0]
+                        const plotPercentage = plotTile[1]
                         if (unwantedCrop.includes(plotCrop)) {
-                            console.log(plotTile, x, y, '不要的，挖掉')
                             garden.clickTile(x, y)
                         } else {
-                            const plotCropPercentage = plotTile[1]
-                            if (plotCropPercentage >= 75) {
-                                console.log(plotTile, x, y, '要的，熟了，挖')
+                            if (plotPercentage >= 75) {
                                 garden.clickTile(x, y)
                             } else if (plotCrop !== 0) {
-                                console.log(plotTile, x, y, '要的，没熟，不挖')
                             }
                         }
                     }
                 }
             }
+        }
+
+        if (this.config.toddsfertilizer) {
+            garden.soils.fertilizer.tick = 0.1
+        } else {
+            garden.soils.fertilizer.tick = 3
         }
 
         // Game.Objects['Grandma']
@@ -329,6 +329,7 @@ if (!FortuneHelper) var FortuneHelper = {
         </div>
         <div class="listing">
             ${this.button('toddsplant', 'Todds-AutoPlant ON', 'Todds-AutoPlant OFF')}
+            ${this.button('toddsfertilizer', 'Todds-Fertilizer ON', 'Todds-Fertilizer OFF')}
         </div>
         <br>
         ${this.header('Advanced')}
