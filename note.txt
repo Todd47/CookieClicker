@@ -3,3 +3,16 @@ https://todd47.github.io/CookieClicker/FortuneHelper/main.js
 
 
 F:\SteamLibrary\steamapps\common\Cookie Clicker\resources\app\mods\workshop\FortuneHelper
+
+OpenSSL SSL_read: Connection was reset, errno 10054
+https://blog.csdn.net/Bro_come/article/details/129712299
+
+
+git config --global https.sslVerify "false"
+git config --global http.sslVerify "false"
+# 刷新ip缓存
+ipconfig /flushdns
+
+git config --global -l
+git config --global --unset http.proxy
+git config --global --unset https.proxy

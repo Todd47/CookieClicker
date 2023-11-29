@@ -216,9 +216,11 @@ if (!FortuneHelper) var FortuneHelper = {
         }
 
         if (this.config.toddsfertilizer) {
-            garden.soils.fertilizer.tick = 0.1
+            garden.soils.fertilizer.tick = 0.05
+            garden.soils.woodchips.tick = 0.05
         } else {
             garden.soils.fertilizer.tick = 3
+            garden.soils.woodchips.tick = 5
         }
 
         // Game.Objects['Grandma']

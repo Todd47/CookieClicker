@@ -1,25 +1,8 @@
-for js code:
+help me modify the options, i want to have a option list like
 ```
-const unwantedCrop = [1,2,3,14]
-
-    for (let x = 0; x < 6; x++) {
-        for (let y = 0; y < 6; y++) {
-            const plotTile = garden.getTile(x, y)
-            plotCrop = plotTile[0]
-            if (unwantedCrop.contains(plotCrop)) {
-                // garden.click(x,y)
-                console.log(plotTile, x, y)
-            }
-        }
-    }
+gardenOptions: [
+        {name: "Baker's wheat", value: 0},
+        {name: "Thumbcorn", value: 1},
+        {name: "Cronerice", value: 2},
+    ],
 ```
-number array does not have method contains, how can i fix above code?
-
-
-目前在做自动刷Bakeberry(2 x Wheat有0.1%出)
-基本逻辑是这样的，
-首先泥土要选3倍分裂（wood chip）
-
-我截图的这10个位置自动种 wheat
-
-5秒检查一次空位，如果空位是不要的品种就点掉，如果是要的品种就等75%成熟度以上再点
