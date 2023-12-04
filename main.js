@@ -285,6 +285,21 @@ if (!FortuneHelper) var FortuneHelper = {
         }
     },
 
+    updateGameLumpTime: function () {
+        const inputHour = document.getElementById('inputHour').value;
+        const inputMinute = document.getElementById('inputMinute').value;
+        const inputType = document.getElementById('inputType').value;
+
+        const hour = 3600000;
+        const minute = 60000;
+
+        Game.lumpT = Date.now() - inputHour * hour - inputMinute * minute;
+        Game.lumpCurrentType = inputType;
+
+        // Display the result or do something else as needed
+        Game.Notify('Game.lumpT updated to: ' + Game.lumpT, stockerGreeting, [1, 33], false);
+    },
+
 
     /* Menu */
 
@@ -332,6 +347,17 @@ if (!FortuneHelper) var FortuneHelper = {
         <div class="listing">
             ${this.button('toddsplant', 'Todds-AutoPlant ON', 'Todds-AutoPlant OFF')}
             ${this.button('toddsfertilizer', 'Todds-Fertilizer ON', 'Todds-Fertilizer OFF')}
+        </div>
+        <div class="listing">
+        
+        <label for="inputHour">Hour:</label>
+        <input type="number" id="inputHour" min="0" max="23" value="21"><br><br>
+        <label for="inputMinute">Minute:</label>
+        <input type="number" id="inputMinute" min="0" max="59" value="0"><br><br>
+        <label for="inputType">Lump Type:</label>
+        <input type="number" id="inputType" min="0" max="4" value="0"><br><br>
+        <button onclick="FortuneHelper.updateGameLumpTime()">Apply Update</button>
+
         </div>
         <br>
         ${this.header('Advanced')}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game Lump Time Update</title>
+    <script src="../CookiStocker/main.js"></script>
+</head>
+<body>
+<label for="inputHour">Hour:</label>
+<input type="number" id="inputHour" min="0" max="23" value="21"><br><br>
+<label for="inputMinute">Minute:</label>
+<input type="number" id="inputMinute" min="0" max="59" value="0"><br><br>
+<button onclick="updateGameLumpTime()">Apply Update</button>
+
+<script>
+    function updateGameLumpTime() {
+        const inputHour = document.getElementById('inputHour').value;
+        const inputMinute = document.getElementById('inputMinute').value;
+
+        const hour = 3600000;
+        const minute = 60000;
+
+        Game.lumpT = Date.now() - inputHour * hour - inputMinute * minute;
+
+        // Display the result or do something else as needed
+        console.log("Game.lumpT updated to: ", Game.lumpT);
+    }
+</script>
+</body>
+</html>
