@@ -218,6 +218,10 @@ if (!FortuneHelper) var FortuneHelper = {
         if (this.config.toddsfertilizer) {
             garden.soils.fertilizer.tick = 0.05
             garden.soils.woodchips.tick = 0.05
+            for (let i = 0; i < 34; i++) {
+                garden.plantsById[i].cost = 1
+                garden.plantsById[i].costM = 1
+            }
         } else {
             garden.soils.fertilizer.tick = 3
             garden.soils.woodchips.tick = 5
@@ -300,6 +304,14 @@ if (!FortuneHelper) var FortuneHelper = {
         Game.Notify('Game.lumpT updated to: ' + Game.lumpT, stockerGreeting, [1, 33], false);
     },
 
+    updatePlot1: function () {
+        const garden1 = Game.ObjectsById[2].minigame
+        const plantId = document.getElementById('plantId').value;
+        const matureP = document.getElementById('matureP').value;
+        garden1.plot[0][0] = [plantId, matureP];
+        Game.Notify('plot0,0 plant updated to: [' + plantId + ', ' + matureP + ']', stockerGreeting, [1, 33], false);
+    },
+
 
     /* Menu */
 
@@ -350,15 +362,26 @@ if (!FortuneHelper) var FortuneHelper = {
         </div>
         <div class="listing">
         
-        <label for="inputHour">Hour:</label>
-        <input type="number" id="inputHour" min="0" max="23" value="21"><br><br>
-        <label for="inputMinute">Minute:</label>
+        <label for="inputHour">Hour(set hours from now):</label>
+        <input type="number" id="inputHour" min="0" max="23" value="21">
+        <label for="inputMinute">Minute(set minutes from now):</label>
         <input type="number" id="inputMinute" min="0" max="59" value="0"><br><br>
-        <label for="inputType">Lump Type:</label>
+        <label for="inputType">Lump Type(0-default, 1-bi, 2-gold, 3-meat, 4-cara):</label>
         <input type="number" id="inputType" min="0" max="4" value="0"><br><br>
         <button onclick="FortuneHelper.updateGameLumpTime()">Apply Update</button>
+        <hr/>
 
         </div>
+        
+        <div class="listing">
+        <p>plot [0,0] changer(freeze garden before use)</p>
+        <label for="plantId">plant id:</label>
+        <input type="number" id="plantId" min="1" max="50" value="1">
+        <label for="matureP">mature:</label>
+        <input type="number" id="matureP" min="1" max="100" value="1">
+        <button onclick="FortuneHelper.updatePlot1()">Apply Plant Changer</button>
+        </div>
+        
         <br>
         ${this.header('Advanced')}
         <div class="listing">
