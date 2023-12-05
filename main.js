@@ -20,7 +20,9 @@ if (!FortuneHelper) var FortuneHelper = {
         fortunesound: 1,
         goldensound: 1,
         muteclick: 0,
-        chocolateegg: 1
+        chocolateegg: 1,
+        plantId: 1,
+        matureP: 70
     },
 
     isLoaded: false,
@@ -219,8 +221,8 @@ if (!FortuneHelper) var FortuneHelper = {
             garden.soils.fertilizer.tick = 0.05
             garden.soils.woodchips.tick = 0.05
             for (let i = 0; i < 34; i++) {
-                garden.plantsById[i].cost = 1
-                garden.plantsById[i].costM = 1
+                garden.plantsById[i].cost = 0
+                garden.plantsById[i].costM = 0
             }
         } else {
             garden.soils.fertilizer.tick = 3
@@ -301,15 +303,20 @@ if (!FortuneHelper) var FortuneHelper = {
         Game.lumpCurrentType = inputType;
 
         // Display the result or do something else as needed
-        Game.Notify('Game.lumpT updated to: ' + Game.lumpT, stockerGreeting, [1, 33], false);
+        Game.Notify('Game.lumpT updated to: ' + Game.lumpT, 'gg', [1, 33], false);
     },
 
     updatePlot1: function () {
         const garden1 = Game.ObjectsById[2].minigame
-        const plantId = document.getElementById('plantId').value;
+
+        this.config.plantId = document.getElementById('plantId').value;
+        this.config.matureP = document.getElementById('matureP').value;
+
+        var plantId = document.getElementById('plantId').value;
         const matureP = document.getElementById('matureP').value;
+        plantId = parseInt(plantId) + 1;
         garden1.plot[0][0] = [plantId, matureP];
-        Game.Notify('plot0,0 plant updated to: [' + plantId + ', ' + matureP + ']', stockerGreeting, [1, 33], false);
+        Game.Notify('plot0,0 plant updated to: [' + plantId + ', ' + matureP + ']', 'gg', [1, 33], false);
     },
 
 
@@ -354,7 +361,7 @@ if (!FortuneHelper) var FortuneHelper = {
         </div>
         <div class="listing">
             ${this.button('toddsspell', 'Todds-Spell ON', 'Todds-Spell OFF')}
-            <a class="option" id="lumpClicker" onclick="Game.gainLumps(1);" >click me gain lump</a>
+            <a class="option" id="lumpClicker" onclick="Game.gainLumps(25);" >click me gain lump</a>
         </div>
         <div class="listing">
             ${this.button('toddsplant', 'Todds-AutoPlant ON', 'Todds-AutoPlant OFF')}
@@ -376,9 +383,9 @@ if (!FortuneHelper) var FortuneHelper = {
         <div class="listing">
         <p>plot [0,0] changer(freeze garden before use)</p>
         <label for="plantId">plant id:</label>
-        <input type="number" id="plantId" min="1" max="50" value="1">
+        <input type="number" id="plantId" min="0" max="33" value="${this.config.plantId}">
         <label for="matureP">mature:</label>
-        <input type="number" id="matureP" min="1" max="100" value="1">
+        <input type="number" id="matureP" min="1" max="100" value="${this.config.matureP}">
         <button onclick="FortuneHelper.updatePlot1()">Apply Plant Changer</button>
         </div>
         
