@@ -220,10 +220,6 @@ if (!FortuneHelper) var FortuneHelper = {
         if (this.config.toddsfertilizer) {
             garden.soils.fertilizer.tick = 0.05
             garden.soils.woodchips.tick = 0.05
-            for (let i = 0; i < 34; i++) {
-                garden.plantsById[i].cost = 0
-                garden.plantsById[i].costM = 0
-            }
         } else {
             garden.soils.fertilizer.tick = 3
             garden.soils.woodchips.tick = 5
@@ -319,7 +315,6 @@ if (!FortuneHelper) var FortuneHelper = {
         Game.Notify('plot0,0 plant updated to: [' + plantId + ', ' + matureP + ']', 'gg', [1, 33], false);
     },
 
-
     /* Menu */
 
     addOptionsMenu: function () {
@@ -390,6 +385,14 @@ if (!FortuneHelper) var FortuneHelper = {
         </div>
         
         <br>
+        ${this.header('Cheat')}
+        <div class="listing">
+        <button onclick="FortuneHelper.mightyClick(24)">24hrs cookies!</button>
+        <button onclick="FortuneHelper.cheaperStuff()">make stuff cheaper</button>
+        </div>
+        
+        
+        <br>
         ${this.header('Advanced')}
         <div class="listing">
             ${this.button('chocolateegg', 'Automatic Chocolate Egg ON', 'Automatic Chocolate Egg OFF')}
@@ -439,6 +442,26 @@ if (!FortuneHelper) var FortuneHelper = {
         l(button).className = value ? 'option' : 'option off'
         PlaySound('snd/tick.mp3');
     },
+
+    mightyClick: function (hours) {
+        var seconds = hours * 3600; // Convert hours to seconds
+        var cookiesToAdd = Game.cookiesPs * seconds; // Calculate total cookies = CPS * Total Seconds
+        Game.Earn(cookiesToAdd); // Add the calculated cookies to the current total
+    },
+
+    cheaperStuff: function () {
+
+        Game.ObjectsById[5].minigame.getBrokerPrice = function() {
+            return 1;
+        };
+
+        for (let i = 0; i < 34; i++) {
+            Game.ObjectsById[2].minigame.plantsById[i].cost = 0
+            Game.ObjectsById[2].minigame.plantsById[i].costM = 0
+        }
+
+        Game.Notify('零元购', 'seed and broker is now much cheaper!', [1, 33], false);
+    }
 };
 
 // Bind methods

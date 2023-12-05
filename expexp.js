@@ -1,4 +1,13 @@
 garden = Game.ObjectsById[2].minigame
+
+bank = Game.ObjectsById[5].minigame
+
+Game.ObjectsById[5].minigame.getBrokerPrice = function() {
+    return 1;
+};
+
+Game.ObjectsById[2].minigame.plantsById[0].cost = 0
+
 plot1 = garden.plot[0][0]
 plot1 = [1,58]
 // plotTile = garden.getTile(0,0)
@@ -20,7 +29,6 @@ Meddleweed 14
 //     garden.plantsById[i].costM = 1
 // }
 
-const bank = Game.ObjectsById[5].minigame
 
 // Game.lumpMatureAge=1;
 // Game.lumpRipeAge=1;
