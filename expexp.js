@@ -2,6 +2,8 @@ garden = Game.ObjectsById[2].minigame
 
 bank = Game.ObjectsById[5].minigame
 
+magic = Game.ObjectsById[7].minigame
+
 Game.ObjectsById[5].minigame.getBrokerPrice = function() {
     return 1;
 };

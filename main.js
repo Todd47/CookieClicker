@@ -157,13 +157,18 @@ if (!FortuneHelper) var FortuneHelper = {
             }
         }
 
-        if (this.config.toddsspell && this.toddsLoopCounter % 10 === 0) {
-            const mana = 100,
-                spell = "hand of fate",
-                grimoire = Game.Objects["Wizard tower"].minigame;
+        // if (this.config.toddsspell && this.toddsLoopCounter % 10 === 0) {
 
-            if (grimoire.magic >= mana)
+        const grimoire = Game.Objects["Wizard tower"].minigame;
+        const spell = "hand of fate";
+        if (this.config.toddsspell) {
+            grimoire.magic = 500;
+            grimoire.castSpell(grimoire.spells[spell]);
+        } else if (this.toddsLoopCounter % 10 === 0) {
+            const spellCost = 10 + parseInt(grimoire.magicM) * 0.6;
+            if (grimoire.magic >= spellCost) {
                 grimoire.castSpell(grimoire.spells[spell]);
+            }
         }
         const garden = Game.ObjectsById[2].minigame
 
@@ -356,6 +361,7 @@ if (!FortuneHelper) var FortuneHelper = {
         </div>
         <div class="listing">
             ${this.button('toddsspell', 'Todds-Spell ON', 'Todds-Spell OFF')}
+            <label>开则无限蓝点金手指，关则正常等蓝够了点金手指</label>
             <a class="option" id="lumpClicker" onclick="Game.gainLumps(25);" >click me gain lump</a>
         </div>
         <div class="listing">
@@ -445,13 +451,18 @@ if (!FortuneHelper) var FortuneHelper = {
 
     mightyClick: function (hours) {
         var seconds = hours * 3600; // Convert hours to seconds
-        var cookiesToAdd = Game.cookiesPs * seconds; // Calculate total cookies = CPS * Total Seconds
-        Game.Earn(cookiesToAdd); // Add the calculated cookies to the current total
+        if (Game.cookiesPs > 0) {
+            var cookiesToAdd = Game.cookiesPs * seconds; // Calculate total cookies = CPS * Total Seconds
+            Game.Earn(cookiesToAdd); // Add the calculated cookies to the current total
+        } else {
+            Game.Earn(10000);
+        }
+
     },
 
     cheaperStuff: function () {
 
-        Game.ObjectsById[5].minigame.getBrokerPrice = function() {
+        Game.ObjectsById[5].minigame.getBrokerPrice = function () {
             return 1;
         };
 
