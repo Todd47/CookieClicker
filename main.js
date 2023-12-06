@@ -395,6 +395,8 @@ if (!FortuneHelper) var FortuneHelper = {
         <div class="listing">
         <button onclick="FortuneHelper.mightyClick(24)">24hrs cookies!</button>
         <button onclick="FortuneHelper.cheaperStuff()">make stuff cheaper</button>
+        <button onclick="FortuneHelper.popProfit()">check my profit</button>
+        <button onclick="FortuneHelper.popSpell()">check my spell</button>
         </div>
         
         
@@ -472,6 +474,22 @@ if (!FortuneHelper) var FortuneHelper = {
         }
 
         Game.Notify('零元购', 'seed and broker is now much cheaper!', [1, 33], false);
+    },
+
+    popSpell: function () {
+        const curSpellCasted = Game.Objects["Wizard tower"].minigame.spellsCastTotal;
+        Game.Notify('check spell', 'current spell casted:' + curSpellCasted,
+            [1, 33], false);
+    },
+
+    popProfit: function () {
+        const curProfit = Game.ObjectsById[5].minigame.profit;
+        if (curProfit < 0) {
+            Game.ObjectsById[5].minigame.profit = 10;
+        }
+        const morProfit = 31536000 - parseInt(curProfit);
+        Game.Notify('check profit', 'current profit:' + curProfit + '. you need ' + morProfit + ' more profit',
+            [1, 33], false);
     }
 };
 
