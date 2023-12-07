@@ -231,6 +231,8 @@ if (!FortuneHelper) var FortuneHelper = {
                 for (let y = 0; y < 6; y++) {
                     const plotTile = garden.getTile(x, y)
                     const cropId = parseInt(garden.seedSelected) + 1
+                    console.log('plotTile:', plotTile[0])
+                    console.log('cropId:', cropId)
                     if (parseInt(plotTile[0]) !== cropId) {
                         garden.seedSelected = this.config.autoPlantId
                         garden.clickTile(x, y)
