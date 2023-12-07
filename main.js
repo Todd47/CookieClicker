@@ -226,7 +226,6 @@ if (!FortuneHelper) var FortuneHelper = {
 
         if (this.config.toddsplant) {
             console.log('auto plant id:' + this.config.autoPlantId)
-
             for (let x = 0; x < 6; x++) {
                 for (let y = 0; y < 6; y++) {
                     const plotTile = garden.getTile(x, y)
