@@ -226,7 +226,6 @@ if (!FortuneHelper) var FortuneHelper = {
 
         if (this.config.toddsplant) {
             console.log('auto plant id:' + this.config.autoPlantId)
-            this.config.autoPlantId = document.getElementById('autoPlantId').value;
 
             for (let x = 0; x < 6; x++) {
                 for (let y = 0; y < 6; y++) {
@@ -325,6 +324,10 @@ if (!FortuneHelper) var FortuneHelper = {
         Game.Notify('Game.lumpT updated to: ' + Game.lumpT, 'gg', [1, 33], false);
     },
 
+    updateAutoPlantId: function () {
+        this.config.autoPlantId = document.getElementById('autoPlantId').value;
+    },
+
     updatePlot1: function () {
         const garden1 = Game.ObjectsById[2].minigame
 
@@ -383,8 +386,9 @@ if (!FortuneHelper) var FortuneHelper = {
             <a class="option" id="lumpClicker" onclick="Game.gainLumps(25);" >click me gain lump</a>
         </div>
         <div class="listing">
-            <label for="autoPlantId">plant id:</label>
+            <label for="autoPlantId">auto plant id:</label>
             <input type="number" id="autoPlantId" min="0" max="33" value="${this.config.autoPlantId}">
+            <button onclick="FortuneHelper.updateAutoPlantId()">Apply</button>
             ${this.button('toddsplant', 'Todds-AutoPlant ON', 'Todds-AutoPlant OFF')}
             ${this.button('toddsfertilizer', 'Todds-Fertilizer ON', 'Todds-Fertilizer OFF')}
         </div>
