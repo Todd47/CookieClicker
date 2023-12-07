@@ -174,66 +174,70 @@ if (!FortuneHelper) var FortuneHelper = {
         const garden = Game.ObjectsById[2].minigame
 
         // old code
-        // if (this.config.toddsplant) {
-        //     const unwantedCrop = [1, 2, 3, 14]
-        //     for (let x = 0; x < 6; x++) {
-        //         for (let y = 0; y < 6; y++) {
-        //
-        //             // 确保种下去的是wheat
-        //             if (garden.seedSelected !== 0) {
-        //                 garden.seedSelected = 0
-        //             }
-        //
-        //             //     基础planted列
-        //             if ((x === 1 & y !== 3) || (x === 4 & y !== 3)) {
-        //                 const plotTile = garden.getTile(x, y)
-        //                 const plotCrop = plotTile[0]
-        //                 if (plotCrop !== 1 && plotCrop !== 0) {
-        //
-        //                     if (unwantedCrop.includes(plotCrop)) {
-        //                         // 挖掉
-        //                         garden.clickTile(x, y)
-        //                         // 种下
-        //                         garden.clickTile(x, y)
-        //                     } else {
-        //                         const plotCropPercentage = plotTile[1]
-        //                         if (plotCropPercentage >= 75) {
-        //                             garden.clickTile(x, y)
-        //                         } else if (plotCrop !== 0) {
-        //                         }
-        //                     }
-        //                 } else if (plotCrop === 0) { // 自然死亡或者是别的情况挖掉的话
-        //                     // 种下
-        //                     garden.clickTile(x, y)
-        //                 }
-        //
-        //             } else {
-        //                 const plotTile = garden.getTile(x, y)
-        //                 const plotCrop = plotTile[0]
-        //                 const plotPercentage = plotTile[1]
-        //                 if (unwantedCrop.includes(plotCrop)) {
-        //                     garden.clickTile(x, y)
-        //                 } else {
-        //                     if (plotPercentage >= 75) {
-        //                         garden.clickTile(x, y)
-        //                     } else if (plotCrop !== 0) {
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+        /*if (this.config.toddsplant) {
+            const unwantedCrop = [1, 2, 3, 14]
+            for (let x = 0; x < 6; x++) {
+                for (let y = 0; y < 6; y++) {
+
+                    // 确保种下去的是wheat
+                    if (garden.seedSelected !== 0) {
+                        garden.seedSelected = 0
+                    }
+
+                    //     基础planted列
+                    if ((x === 1 & y !== 3) || (x === 4 & y !== 3)) {
+                        const plotTile = garden.getTile(x, y)
+                        const plotCrop = plotTile[0]
+                        if (plotCrop !== 1 && plotCrop !== 0) {
+
+                            if (unwantedCrop.includes(plotCrop)) {
+                                // 挖掉
+                                garden.clickTile(x, y)
+                                // 种下
+                                garden.clickTile(x, y)
+                            } else {
+                                const plotCropPercentage = plotTile[1]
+                                if (plotCropPercentage >= 75) {
+                                    garden.clickTile(x, y)
+                                } else if (plotCrop !== 0) {
+                                }
+                            }
+                        } else if (plotCrop === 0) { // 自然死亡或者是别的情况挖掉的话
+                            // 种下
+                            garden.clickTile(x, y)
+                        }
+
+                    } else {
+                        const plotTile = garden.getTile(x, y)
+                        const plotCrop = plotTile[0]
+                        const plotPercentage = plotTile[1]
+                        if (unwantedCrop.includes(plotCrop)) {
+                            garden.clickTile(x, y)
+                        } else {
+                            if (plotPercentage >= 75) {
+                                garden.clickTile(x, y)
+                            } else if (plotCrop !== 0) {
+                            }
+                        }
+                    }
+                }
+            }
+        }*/
 
         if (this.config.toddsplant) {
             console.log('auto plant id:' + this.config.autoPlantId)
             for (let x = 0; x < 6; x++) {
                 for (let y = 0; y < 6; y++) {
+
+                    garden.seedSelected = parseInt(this.config.autoPlantId)
+
                     const plotTile = garden.getTile(x, y)
                     const cropId = parseInt(garden.seedSelected) + 1
+
                     console.log('plotTile:', plotTile[0])
                     console.log('cropId:', cropId)
+
                     if (parseInt(plotTile[0]) !== cropId) {
-                        garden.seedSelected = this.config.autoPlantId
                         garden.clickTile(x, y)
                     }
                 }
