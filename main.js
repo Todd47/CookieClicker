@@ -397,6 +397,7 @@ if (!FortuneHelper) var FortuneHelper = {
         <button onclick="FortuneHelper.cheaperStuff()">make stuff cheaper</button>
         <button onclick="FortuneHelper.popProfit()">check my profit</button>
         <button onclick="FortuneHelper.popSpell()">check my spell</button>
+        <button onclick="FortuneHelper.popHarvest()">check my harvest</button>
         </div>
         
         
@@ -468,17 +469,27 @@ if (!FortuneHelper) var FortuneHelper = {
             return 1;
         };
 
+        Game.getLumpRefillMax = function() {
+            return 1;
+        };
+
         for (let i = 0; i < 34; i++) {
             Game.ObjectsById[2].minigame.plantsById[i].cost = 0
             Game.ObjectsById[2].minigame.plantsById[i].costM = 0
         }
 
-        Game.Notify('零元购', 'seed and broker is now much cheaper!', [1, 33], false);
+        Game.Notify('零元购', 'seed and broker is now much cheaper! garden lump refill faster.', [1, 33], false);
     },
 
     popSpell: function () {
         const curSpellCasted = Game.Objects["Wizard tower"].minigame.spellsCastTotal;
         Game.Notify('check spell', 'current spell casted:' + curSpellCasted,
+            [1, 33], false);
+    },
+
+    popHarvest: function () {
+        const ht = Game.ObjectsById[2].minigame.harvestsTotal
+        Game.Notify('check spell', 'garden total harvests:' + ht,
             [1, 33], false);
     },
 

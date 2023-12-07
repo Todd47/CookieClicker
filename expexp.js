@@ -8,6 +8,10 @@ Game.ObjectsById[5].minigame.getBrokerPrice = function() {
     return 1;
 };
 
+Game.getLumpRefillMax = function() {
+    return 1;
+};
+
 Game.ObjectsById[2].minigame.plantsById[0].cost = 0
 
 plot1 = garden.plot[0][0]
