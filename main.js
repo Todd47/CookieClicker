@@ -440,6 +440,7 @@ if (!FortuneHelper) var FortuneHelper = {
         <button onclick="FortuneHelper.popProfit()">check my profit</button>
         <button onclick="FortuneHelper.popSpell()">check my spell</button>
         <button onclick="FortuneHelper.popHarvest()">check my harvest</button>
+        <button onclick="FortuneHelper.popResets()">check my resets</button>
         </div>
         
         
@@ -543,7 +544,13 @@ if (!FortuneHelper) var FortuneHelper = {
         const morProfit = 31536000 - parseInt(curProfit);
         Game.Notify('check profit', 'current profit:' + curProfit + '. you need ' + morProfit + ' more profit',
             [1, 33], false);
-    }
+    },
+
+    popResets: function () {
+        const rt = Game.resets
+        Game.Notify('check resets', 'total reincarnation count:' + rt,
+            [1, 33], false);
+    },
 };
 
 // Bind methods
