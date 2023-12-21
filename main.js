@@ -14,6 +14,7 @@ if (!FortuneHelper) var FortuneHelper = {
         toddsspell: 0,
         toddsplant: 0,
         autoPlantId: 1,
+        toddsAutoReincarnate: 0,
         toddsfertilizer: 0,
         pledge: 0,
         click: 10,
@@ -115,6 +116,17 @@ if (!FortuneHelper) var FortuneHelper = {
     },
 
     toddsLoop: function () {
+        // always add counter
+        this.toddsLoopCounter++;
+
+        if (this.config.toddsAutoReincarnate && this.toddsLoopCounter % 7 === 0) {
+            Game.Ascend(1);
+            setTimeout(function() {
+                Game.Reincarnate(1); // Similarly, replace with the actual game command.
+            }, 10000);
+        }
+
+
         if (this.config.toddsresearch) {
             for (const upgrade of Game.UpgradesInStore) {
                 if (this.config.toddsresearch && upgrade.pool !== 'tech' && upgrade.pool !== 'toggle') {
@@ -141,9 +153,10 @@ if (!FortuneHelper) var FortuneHelper = {
 
                 const curAmount = build.amount
 
-                const buildStepList = [600, 550, 500, 450, 400, 350, 300, 250, 200, 150, 100, 50, 25, 10, 5, 1]
+                const buildStepList = [700, 650, 600, 550, 500,
+                    450, 400, 350, 300, 250, 200, 150, 100, 50, 25, 10, 5, 1]
 
-                if (curAmount < 600) {
+                if (curAmount < 701) {
                     for (const stepLevel of buildStepList) {
                         const diff = stepLevel - curAmount
                         if (affordableCheck(build, diff)) {
@@ -253,7 +266,6 @@ if (!FortuneHelper) var FortuneHelper = {
         }
 
         // Game.Objects['Grandma']
-        this.toddsLoopCounter++;
         // reset counter
         if (this.toddsLoopCounter === 19999) {
             this.toddsLoopCounter = 0;
@@ -384,6 +396,7 @@ if (!FortuneHelper) var FortuneHelper = {
         <div class="listing">
             ${this.button('toddsresearch', 'Todds-Research ON', 'Todds-Research OFF')}
             ${this.button('toddsbuild', 'Todds-Build ON', 'Todds-Build OFF')}
+            ${this.button('toddsAutoReincarnate', 'Todds-Reincarnate ON', 'Todds-Reincarnate OFF')}
         </div>
         <div class="listing">
             ${this.button('toddsspell', 'Todds-Spell ON', 'Todds-Spell OFF')}
@@ -422,7 +435,7 @@ if (!FortuneHelper) var FortuneHelper = {
         <br>
         ${this.header('Cheat')}
         <div class="listing">
-        <button onclick="FortuneHelper.mightyClick(24)">24hrs cookies!</button>
+        <button onclick="FortuneHelper.mightyClick(2400)">24hrs cookies!</button>
         <button onclick="FortuneHelper.cheaperStuff()">make stuff cheaper</button>
         <button onclick="FortuneHelper.popProfit()">check my profit</button>
         <button onclick="FortuneHelper.popSpell()">check my spell</button>
