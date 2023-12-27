@@ -11,6 +11,7 @@ if (!FortuneHelper) var FortuneHelper = {
         research: 0,
         toddsresearch: 0,
         toddsbuild: 0,
+        toddsgcs: 0,
         toddsspell: 0,
         toddsplant: 0,
         autoPlantId: 1,
@@ -119,20 +120,18 @@ if (!FortuneHelper) var FortuneHelper = {
         // always add counter
         this.toddsLoopCounter++;
 
-        if (this.config.toddsAutoReincarnate && this.toddsLoopCounter % 7 === 0) {
-            Game.Ascend(1);
-            setTimeout(function() {
-                Game.Reincarnate(1); // Similarly, replace with the actual game command.
-            }, 10000);
+        if (this.config.toddsAutoReincarnate) {
+            FortuneHelper.mightyClick(2400);
+            if (this.toddsLoopCounter % 20 === 0) {
+                Game.Ascend(1);
+                setTimeout(function() {
+                    Game.Reincarnate(1); // Similarly, replace with the actual game command.
+                }, 9000);
+            }
         }
 
-
-        if (this.config.toddsresearch) {
-            for (const upgrade of Game.UpgradesInStore) {
-                if (this.config.toddsresearch && upgrade.pool !== 'tech' && upgrade.pool !== 'toggle') {
-                    upgrade.buy(1);
-                }
-            }
+        if (this.config.toddsgcs) {
+            FortuneHelper.spawnGoldenCookie(5)
         }
 
         if (this.config.toddsbuild) {
@@ -169,6 +168,30 @@ if (!FortuneHelper) var FortuneHelper = {
                     execBuy(build, 10)
                 }
             }
+        }
+
+        if (this.config.toddsresearch) {
+            for (const upgrade of Game.UpgradesInStore) {
+                if (this.config.toddsresearch && upgrade.pool !== 'tech' && upgrade.pool !== 'toggle') {
+                    upgrade.buy(1);
+                }
+            }
+            const sl = Game.santaLevel
+
+            if (sl < 14) {
+                for (let i = 0; i < 14 - sl; i++) {
+                    Game.UpgradeSanta();
+                    Game.ToggleSpecialMenu(0);
+                }
+            }
+            const dl = Game.dragonLevel
+            if (dl < 27) {
+                for (let i = 0; i < 27 - dl; i++) {
+                    Game.UpgradeDragon();
+                    Game.ToggleSpecialMenu(0);
+                }
+            }
+            Game.ToggleSpecialMenu(0);
         }
 
         // if (this.config.toddsspell && this.toddsLoopCounter % 10 === 0) {
@@ -396,6 +419,7 @@ if (!FortuneHelper) var FortuneHelper = {
         <div class="listing">
             ${this.button('toddsresearch', 'Todds-Research ON', 'Todds-Research OFF')}
             ${this.button('toddsbuild', 'Todds-Build ON', 'Todds-Build OFF')}
+            ${this.button('toddsgcs', 'Todds-GoldCookie ON', 'Todds-GoldCookie OFF')}
             ${this.button('toddsAutoReincarnate', 'Todds-Reincarnate ON', 'Todds-Reincarnate OFF')}
         </div>
         <div class="listing">
@@ -435,12 +459,15 @@ if (!FortuneHelper) var FortuneHelper = {
         <br>
         ${this.header('Cheat')}
         <div class="listing">
-        <button onclick="FortuneHelper.mightyClick(2400)">24hrs cookies!</button>
+        <button onclick="FortuneHelper.mightyClick(24000)">24hrs cookies!</button>
         <button onclick="FortuneHelper.cheaperStuff()">make stuff cheaper</button>
         <button onclick="FortuneHelper.popProfit()">check my profit</button>
         <button onclick="FortuneHelper.popSpell()">check my spell</button>
         <button onclick="FortuneHelper.popHarvest()">check my harvest</button>
         <button onclick="FortuneHelper.popResets()">check my resets</button>
+        <button onclick="FortuneHelper.popGoldCookieClick()">check my gcc</button>
+        <button onclick="FortuneHelper.spawnGoldenCookie()">golden cookie</button>
+        <button onclick="FortuneHelper.spawnWrinklers()">spawn wrinklers</button>
         </div>
         
         
@@ -550,6 +577,24 @@ if (!FortuneHelper) var FortuneHelper = {
         const rt = Game.resets
         Game.Notify('check resets', 'total reincarnation count:' + rt,
             [1, 33], false);
+    },
+
+    spawnGoldenCookie: function (spawnCount) {
+        // var newShimmer = new Game.shimmer("golden");
+
+        for (var i = 0; i < spawnCount; i++) {
+            var newShimmer = new Game.shimmer('golden',{noWrath:true});
+            newShimmer.spawnLead=1;
+            // newShimmer.pop();
+        }
+    },
+    popGoldCookieClick: function () {
+        const rt = Game.goldenClicks
+        Game.Notify('check gcc', 'total golden cookie clicks:' + rt,
+            [1, 33], false);
+    },
+    spawnWrinklers: function () {
+        for (i = 0; i < Game.wrinklers.length; i++) { Game.wrinklers[i].phase = 1; }
     },
 };
 
