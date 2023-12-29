@@ -50,3 +50,14 @@ Game.lumpT = Date.now() - inputHour * hour - inputMinute * minute
 
 Game.lumpT = Game.lumpT - 2*minute
 Game.lumpCurrentType = 1
+
+
+
+// real Game.fulldate = 1699835092482
+// Monday, November 13, 2023 8:24:52.482 AM
+
+// 1699835092482 + 365*24*60*60*1000
+// 1699835092482 + 31,536,000,000 = 1,731,371,092,482
+// 1672281065701
+
+const thirtyDays = 2592000000

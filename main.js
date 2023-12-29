@@ -468,6 +468,8 @@ if (!FortuneHelper) var FortuneHelper = {
         <button onclick="FortuneHelper.popGoldCookieClick()">check my gcc</button>
         <button onclick="FortuneHelper.spawnGoldenCookie()">golden cookie</button>
         <button onclick="FortuneHelper.spawnWrinklers()">spawn wrinklers</button>
+        <button onclick="FortuneHelper.timeWarp()">go back in time</button>
+        <button onclick="FortuneHelper.checkGFD()">checkGFD</button>
         </div>
         
         
@@ -595,6 +597,15 @@ if (!FortuneHelper) var FortuneHelper = {
     },
     spawnWrinklers: function () {
         for (i = 0; i < Game.wrinklers.length; i++) { Game.wrinklers[i].phase = 1; }
+    },
+    timeWarp: function () {
+        Game.fullDate = Date.now() - 365 * 24 * 60 * 60 * 1000 + 125 * 60 * 1000
+        Game.Notify('time warp', 'game start time went back in time',
+            [1, 33], false);
+    },
+    checkGFD: function () {
+        Game.Notify('checkGFD', 'game start time: ' + Game.fullDate,
+            [1, 33], false);
     },
 };
 
